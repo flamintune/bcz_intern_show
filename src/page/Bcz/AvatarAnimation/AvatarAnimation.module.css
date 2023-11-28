@@ -1,0 +1,53 @@
+.phoneBorder{
+    width: 375px; 
+    height: 667px;
+    border: 16px solid #FFF;
+    border-radius: 36px;
+    scrollbar-width: 0;
+    padding: 16px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    text-align: left;
+    overflow: hidden;
+    /* overflow-y: scroll; */
+    position: relative;
+}
+.phoneBorder::-webkit-scrollbar{
+    display: none;
+}
+
+.app {
+    display: flex;
+  }
+  
+.editor {
+flex-basis: 50%;
+padding: 10px;
+}
+
+.preview {
+flex-basis: 50%;
+padding: 10px;
+}
+
+.editor, 
+.preview {
+height: 300px;
+border: 1px solid #ddd;
+}
+
+.editor {
+box-sizing: border-box;
+}
+
+.title{
+    width: 209px;
+    overflow: hidden;
+    border-right:1px solid white;
+}
+.avatar{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: block;
+    margin-top: 100px;
+}

@@ -1,0 +1,8 @@
+.btnCopy{
+    border: none;
+    color:blue;
+    background: none;
+}
+.btnCopy:hover{
+    opacity: 0.7;
+}
