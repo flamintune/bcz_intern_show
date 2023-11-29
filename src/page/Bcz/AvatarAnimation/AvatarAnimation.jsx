@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import { animate } from './animate'
 import styles from './AvatarAnimation.module.css'
 import './AvatarAnimation.css'
@@ -9,7 +9,7 @@ export default function AvatarAnimation() {
   const firstImageRef = useRef(null)
   const lastImageRef = useRef(null)
   const [visiable, setVisiable] = useState(false)
-  const [duration, setDuration] = useState(50)
+  const [duration, setDuration] = useState(1000)
 
   // 打字机动画
   useLayoutEffect(() => {
@@ -45,8 +45,6 @@ export default function AvatarAnimation() {
     if (visiable) {
       borderRef.current.style.overflowY = 'hidden'
       let borderBox = borderRef.current.getBoundingClientRect()
-      console.log(borderBox)
-      maskRef.current.style.position = 'fixed'
       maskRef.current.style.top = borderBox.top + 'px'
       maskRef.current.style.left = borderBox.left + 'px'
       maskRef.current.style.width = borderRef.current.clientWidth + 'px'
@@ -63,7 +61,7 @@ export default function AvatarAnimation() {
       const scale = firstImageBox.width / lastImageBox.width
       lastImageRef.current.style.transformOrigin = 'left top'
       //   lastImageRef.current.style.transform = `translate(${deltaX}px,${deltaY}px) scale(${scale})`
-      let runtime = animate(
+      let cancel = animate(
         {
           duration: duration,
         },
@@ -73,9 +71,12 @@ export default function AvatarAnimation() {
           lastImageRef.current.style.borderRadius = `${currentState.borderRadius}%`
           lastImageRef.current.style.transform = `translate(${currentState.translateX}px,${currentState.translateY}px) scale(${currentState.scale})`
         },
-      )
-      return ()=>{runtime.cancel()}
+      ).cancel
+      return () => {
+        cancel()
+      }
     } else {
+      console.log('😇', maskRef.current)
       borderRef.current.style.overflowY = 'scroll'
     }
   }, [visiable])
@@ -85,8 +86,8 @@ export default function AvatarAnimation() {
         AvatarAnimation
       </div>
       <div style={{ marginBottom: 20 }}>点击头像查看动画，滑动页面，再次点击查看</div>
-      <div style={{display:'flex',flexDirection:'row-reverse'}}>
-        <div style={{marginLeft:20}}>
+      <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
+        <div style={{ marginLeft: 20 }}>
           <input
             type="range"
             min="100"
@@ -106,7 +107,6 @@ export default function AvatarAnimation() {
             className={styles.avatar}
             src="https://vol-v6.bczcdn.com/group/avatar/default0.png"
             onClick={() => {
-              console.log('clicked')
               setVisiable(true)
             }}
           />
@@ -120,9 +120,16 @@ export default function AvatarAnimation() {
                 alignItems: 'center',
                 border: '16px solid #FFF',
                 borderRadius: 36,
+                position: 'fixed',
               }}
               onClick={() => {
-                setVisiable(false)
+                let cancel = animate({ duration: 100 }, { opacity: 1 }, { opacity: 0 }, currentState => {
+                  maskRef.current.style.opacity = currentState.opacity
+                }).cancel
+                setTimeout(() => {
+                  cancel()
+                  setVisiable(false)
+                }, 200);
               }}
             >
               <img
