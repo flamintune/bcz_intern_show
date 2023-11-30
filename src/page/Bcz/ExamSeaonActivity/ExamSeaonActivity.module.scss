@@ -1,0 +1,65 @@
+.phoneBorder {
+  width: 375px;
+  height: 667px;
+  border: 16px solid #fff;
+  border-radius: 36px;
+  scrollbar-width: 0;
+  padding: 16px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  text-align: left;
+  overflow: hidden;
+  /* overflow-y: scroll; */
+  position: relative;
+}
+.phoneBorder::-webkit-scrollbar {
+  display: none;
+}
+
+$white: #fff;
+$gray: #212121;
+$blue: #22b7eb;
+
+$transition: 0.3s cubic-bezier(0.05, 0.58, 0.32, 1);
+.tabs{
+  display: flex;
+  justify-content: space-around;
+}
+.tab {
+  position: relative;
+  color: darken($white, 15%);
+  transition: color $transition;
+
+  &:not(:last-of-type) {
+    margin-right: 20px;
+  }
+  &:hover {
+    /* Make text full opacity */
+    color: rgba($blue, 1);
+
+    /* Grow blue line */
+    .bottom-line {
+      width: 100%;
+      height: 2px;
+      margin-bottom: -1px;
+      background: $blue;
+    }
+  }
+}
+/* Show an active item with blue line */
+.tab.active {
+  color: rgba($blue, 1);
+  border-bottom: $blue 1px solid;
+}
+
+.bottom-line {
+  position: absolute;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background: transparent;
+  left: 0;
+  transition:
+    width $transition,
+    height 0.1s linear;
+  z-index: 10;
+}

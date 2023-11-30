@@ -1,0 +1,26 @@
+.groupList-enter,
+.groupList-enter-active,
+.groupList-exit,
+.groupList-exit-active {
+  position: absolute;
+  width: 375px;
+}
+
+.groupList-enter {
+  opacity: 0;
+}
+.groupList-enter-active {
+  opacity: 1;
+  transition: all 1000ms;
+}
+.groupList-exit {
+  opacity: 1;
+}
+.groupList-exit-active {
+  opacity: 0;
+  transition: all 1000ms;
+}
+.groupList-exit-done {
+  position: absolute;
+  display: none;
+}
