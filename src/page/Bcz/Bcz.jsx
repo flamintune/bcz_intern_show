@@ -26,7 +26,7 @@ function Bcz() {
             }}>小班头像点击展示全图动画</li>
             <li onClick={() => {
                 navigate("exam-season-activity");
-            }}>备考季活动H5</li>
+            }}>备考季活动H5之虚拟列表</li>
             <li onClick={() => {
                 navigate("class-honor-board");
             }}>小班光荣榜广告牌</li>

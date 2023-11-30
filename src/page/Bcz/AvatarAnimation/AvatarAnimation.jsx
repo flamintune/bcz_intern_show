@@ -1,7 +1,6 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 import { animate } from './animate'
 import styles from './AvatarAnimation.module.css'
-import './AvatarAnimation.css'
 export default function AvatarAnimation() {
   const titleRef = useRef(null)
   const borderRef = useRef(null)
