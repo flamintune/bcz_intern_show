@@ -29,7 +29,7 @@ function Bcz() {
             }}>备考季活动H5之虚拟列表</li>
             <li onClick={() => {
                 navigate("class-honor-board");
-            }}>小班光荣榜广告牌</li>
+            }}>小班光荣榜广告牌  </li>
             <li>深度模式语境模式(正在做的)</li>
           </ul>
         </>

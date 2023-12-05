@@ -10,7 +10,7 @@ import VirtualList from './VirtualList'
 //todo3 当使用CSS Transition的时候，in的使用，我的目标是切换Tab时 in==》true
 export default function ExamSeasonActivity() {
   const [tab, setTab] = useState(0)
-  const tabs = ['Tab 1', 'Tab 2'] // 假设你有三个 tab
+  const tabs = ['Ahook Virtual List', 'My Virtual List'] // 假设你有三个 tab
   return (
     <>
       <div
@@ -32,7 +32,7 @@ export default function ExamSeasonActivity() {
               <div style={{ width: '100%', textAlign: 'left' }}>
                 自己实现的虚拟列表，因为当时场景数据很大，有几十万条，后端给的接口做了分页处理，原理是检测滚动高度，用滚动高度来设置需要展示的视口下标范围inview[]，同时设置viewport，当看到viewport的时候，就开始加载下一页数据。同时当请求到最后一页时，取消展示viewport
                 <br></br>
-                这里用的静态数据，来模拟的分页请求
+                这里用的静态数据和setTimeout，来模拟的分页请求，存在很多bug😥😥，如果没加载出来，就再切换一下tab吧
               </div>
             </>
           )}
