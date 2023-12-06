@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useNavigate, Route, Routes, useLocation } from 'react-router-dom'
 import Blacklist from './Blacklist'
 import AvatarAnimation from './AvatarAnimation'
@@ -8,6 +8,8 @@ import style from './Bcz.module.css'
 import ELO from './assets/elo.gif'
 import VLIST from './assets/virtualList.gif'
 import ANIMATE from './assets/animate.gif'
+import { animate } from './AvatarAnimation/animate'
+import { act } from 'react-dom/test-utils'
 const title = 'BCZ Intern'
 const routes = [
   {
@@ -42,18 +44,38 @@ const routes = [
 const types = ['ALL', 'MIDDLE', 'H5']
 function Navigation() {
   let navigate = useNavigate()
-  let location = useLocation()
+  // let location = useLocation()
   const floatBarRef = useRef(null)
   const typeRef = useRef([])
   const contentRef = useRef([])
   const btnRef = useRef([])
   const imgRef = useRef([])
+  const cardRef = useRef([])
+  const previousActiveTypeRef = useRef(0)
   const [activeType, setActiveType] = useState(0)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    // floatBarRef Animation
     floatBarRef.current.style.width = typeRef.current[activeType].offsetWidth + 'px'
     let rect = typeRef.current[activeType].getBoundingClientRect()
     floatBarRef.current.style.left = rect.left + 'px'
+    let translateX = 100
+    if (activeType < previousActiveTypeRef.current) translateX = -100
+    console.log(translateX)
+    previousActiveTypeRef.current = activeType
+    let cancel = animate(
+      { duration: 200 },
+      { translateX, translateY: 0 },
+      { translateX: 0, translateY: 0 },
+      current => {
+        cardRef.current.forEach(item => {
+          if (item) {
+            item.style.transform = `translate(${current.translateX}px,${current.translateY}px)`
+          }
+        })
+      },
+    ).cancel
+    return () => cancel()
   }, [activeType])
   return (
     <nav>
@@ -62,18 +84,16 @@ function Navigation() {
         <div ref={floatBarRef} className={style.floatBar}></div>
         {types.map((type, index) => {
           return (
-            <>
-              <div
-                key={type}
-                ref={node => (typeRef.current[index] = node)}
-                className={`${style.type} ${activeType === index ? style.activeType : ''}`}
-                onClick={e => {
-                  setActiveType(index)
-                }}
-              >
-                <span>{type}</span>
-              </div>
-            </>
+            <div
+              key={type}
+              ref={node => (typeRef.current[index] = node)}
+              className={`${style.type} ${activeType === index ? style.activeType : ''}`}
+              onClick={e => {
+                setActiveType(index)
+              }}
+            >
+              <span>{type}</span>
+            </div>
           )
         })}
       </div>
@@ -86,7 +106,7 @@ function Navigation() {
           .map((route, index) => (
             <div
               key={route.path}
-              className={style.article}
+              className={style.card}
               onClick={() => {
                 navigate(route.path)
               }}
@@ -104,6 +124,9 @@ function Navigation() {
                 btnRef.current[index].style.transform = `translate(0,50px)`
                 btnRef.current[index].style.opacity = 0
               }}
+              ref={node => {
+                cardRef.current[index] = node
+              }}
             >
               <div
                 ref={node => {
@@ -111,7 +134,7 @@ function Navigation() {
                 }}
                 className={style.pic}
               >
-                <img src={route.src} alt="图片加载吃错惹" />
+                {route.src ? <img src={route.src} alt="图片加载吃错惹" /> : <></>}
               </div>
               <div
                 ref={node => {
