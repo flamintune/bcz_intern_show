@@ -40,7 +40,7 @@ box-sizing: border-box;
 }
 
 .title{
-    width: 209px;
+    width: fit-content;
     overflow: hidden;
     border-right:1px solid white;
 }

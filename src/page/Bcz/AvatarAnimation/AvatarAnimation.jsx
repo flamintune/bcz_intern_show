@@ -32,9 +32,9 @@ export default function AvatarAnimation() {
       { opacity: 1 },
       currentState => {
         if (currentState.opacity < 0.5) {
-          titleRef.current.style.borderRight = `1px solid white`
+          titleRef.current.style.borderColor = `transparent`
         } else {
-          titleRef.current.style.borderRight = '0px'
+          titleRef.current.style.borderColor = 'white'
         }
       },
     )
@@ -81,67 +81,74 @@ export default function AvatarAnimation() {
   }, [visiable])
   return (
     <>
-      <div className={styles.title} ref={titleRef}>
-        AvatarAnimation
-      </div>
-      <div style={{ marginBottom: 20 }}>点击头像查看动画，滑动页面，再次点击查看</div>
-      <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
-        <div style={{ marginLeft: 20 }}>
-          <input
-            type="range"
-            min="100"
-            max="1000"
-            value={duration}
-            onChange={e => {
-              setDuration(e.target.value)
-            }}
-            defaultValue={duration}
-          />
-          <p>当前动画速度：{duration}ms</p>
+      <div style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'}}>
+        <div className={styles.title} ref={titleRef}>
+          AvatarAnimation
         </div>
-        <div ref={borderRef} className={styles.phoneBorder}>
-          <img
-            ref={firstImageRef}
-            alt="avatar"
-            className={styles.avatar}
-            src="https://vol-v6.bczcdn.com/group/avatar/default0.png"
-            onClick={() => {
-              setVisiable(true)
-            }}
-          />
-          <div style={{ height: 650 }}></div>
-          {visiable && (
-            <div
-              className="Mask"
-              ref={maskRef}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                border: '16px solid #FFF',
-                borderRadius: 36,
-                position: 'fixed',
+        <div style={{ marginBottom: 20 }}>点击头像查看动画，滑动页面，再次点击查看</div>
+        <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
+          <div style={{ marginLeft: 20 }}>
+            <input
+              type="range"
+              min="100"
+              max="1000"
+              value={duration}
+              onChange={e => {
+                setDuration(e.target.value)
               }}
+              defaultValue={duration}
+            />
+            <p>当前动画速度：{duration}ms</p>
+          </div>
+          <div ref={borderRef} className={styles.phoneBorder}>
+            <img
+              ref={firstImageRef}
+              alt="avatar"
+              className={styles.avatar}
+              src="https://vol-v6.bczcdn.com/group/avatar/default0.png"
               onClick={() => {
-                let cancel = animate({ duration: 100 }, { opacity: 1 }, { opacity: 0 }, currentState => {
-                  maskRef.current.style.opacity = currentState.opacity
-                }).cancel
-                setTimeout(() => {
-                  cancel()
-                  setVisiable(false)
-                }, 200);
+                setVisiable(true)
               }}
-            >
-              <img
-                ref={lastImageRef}
-                alt="avatar"
-                style={{ width: '100%' }}
-                src="https://vol-v6.bczcdn.com/group/avatar/default0.png"
-                onClick={() => {
-                  setVisiable(true)
+            />
+            <div style={{ height: 650 }}></div>
+            {visiable && (
+              <div
+                className="Mask"
+                ref={maskRef}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  border: '16px solid #FFF',
+                  borderRadius: 36,
+                  position: 'fixed',
                 }}
-              />
-            </div>
-          )}
+                onClick={() => {
+                  let cancel = animate(
+                    { duration: 100 },
+                    { opacity: 1 },
+                    { opacity: 0 },
+                    currentState => {
+                      maskRef.current.style.opacity = currentState.opacity
+                    },
+                  ).cancel
+                  setTimeout(() => {
+                    cancel()
+                    setVisiable(false)
+                  }, 200)
+                }}
+              >
+                <img
+                  ref={lastImageRef}
+                  alt="avatar"
+                  style={{ width: '100%' }}
+                  src="https://vol-v6.bczcdn.com/group/avatar/default0.png"
+                  onClick={() => {
+                    setVisiable(true)
+                  }}
+                />
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </>
