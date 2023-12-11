@@ -50,6 +50,7 @@ export default function Blacklist() {
         onClick={() => {
           setOpen(true)
         }}
+        style={{alignItems:'center'}}
       >
         黑名单
       </Button>

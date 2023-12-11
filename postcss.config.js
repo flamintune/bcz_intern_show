@@ -1,8 +1,7 @@
 import postcssPxToViewport from 'postcss-px-to-viewport'
 import postcssPresetEnv from 'postcss-preset-env'
 import postcssNormalize from 'postcss-normalize'
-
-export const plugins = [
+const plugins = [
   /**
    * Write your CSS rules without vendor prefixes
    * @link https://www.npmjs.com/package/autoprefixer
@@ -40,3 +39,8 @@ export const plugins = [
    */
   postcssNormalize(),
 ]
+
+
+module.exports = {
+  plugins
+}
