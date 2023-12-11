@@ -81,7 +81,15 @@ export default function AvatarAnimation() {
   }, [visiable])
   return (
     <>
-      <div style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'}}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexWrap: 'wrap',
+        }}
+      >
         <div className={styles.title} ref={titleRef}>
           AvatarAnimation
         </div>
