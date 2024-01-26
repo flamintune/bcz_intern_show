@@ -12,6 +12,11 @@
   justify-content: center;
   /* font-size: calc(10px + 2vmin); */
   color: white;
+  background-size: 10px 10px;
+  background-image: 
+  linear-gradient(to right,  rgba(58, 116, 89, 0.2) 1px, transparent 1px),
+  linear-gradient(to bottom,  rgba(58, 116, 89, 0.2) 1px, transparent 1px);
+
 }
 
 .App-link {

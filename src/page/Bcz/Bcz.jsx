@@ -8,6 +8,7 @@ import style from './Bcz.module.css'
 import ELO from './assets/elo.gif'
 import VLIST from './assets/virtualList.gif'
 import ANIMATE from './assets/animate.gif'
+import SHUFFLE from './assets/shuffle.gif'
 import { animate } from './AvatarAnimation/animate'
 import { act } from 'react-dom/test-utils'
 const title = 'BCZ Intern'
@@ -17,6 +18,7 @@ const routes = [
     name: '客服系统黑名单',
     src: '',
     type: 'middle',
+    detail: '查看更多',
     content: 'middle / blacklist',
   },
   {
@@ -24,6 +26,7 @@ const routes = [
     name: '小班头像点击展示全图动画',
     src: ANIMATE,
     type: 'h5',
+    detail: '查看更多',
     content: 'h5 / animate',
   },
   {
@@ -31,6 +34,7 @@ const routes = [
     name: '备考季活动H5之虚拟列表',
     src: VLIST,
     type: 'h5',
+    detail: '查看更多',
     content: 'h5 / virtualList',
   },
   {
@@ -38,7 +42,16 @@ const routes = [
     name: '小班光荣榜广告牌',
     src: ELO,
     type: 'h5',
+    detail: '暂无更多',
     content: 'h5 / billboard',
+  },
+  {
+    path: '',
+    name: '成员管理优化',
+    src: SHUFFLE,
+    type: 'h5',
+    detail: '暂无更多',
+    content: 'h5 / shuffle',
   },
 ]
 const types = ['ALL', 'MIDDLE', 'H5']
@@ -54,50 +67,19 @@ function Navigation() {
   const previousActiveTypeRef = useRef(0)
   const [activeType, setActiveType] = useState(0)
 
-  useLayoutEffect(() => {
-    // floatBarRef Animation
-    floatBarRef.current.style.width = typeRef.current[activeType].offsetWidth + 'px'
-    let rect = typeRef.current[activeType].getBoundingClientRect()
-    floatBarRef.current.style.left = rect.left + 'px'
-    let translateX = 100
-    if (activeType < previousActiveTypeRef.current) translateX = -100
-    console.log(translateX)
-    previousActiveTypeRef.current = activeType
-    let cancel = animate(
-      { duration: 200 },
-      { translateX, translateY: 0 },
-      { translateX: 0, translateY: 0 },
-      current => {
-        cardRef.current.forEach(item => {
-          if (item) {
-            item.style.transform = `translate(${current.translateX}px,${current.translateY}px)`
-          }
-        })
-      },
-    ).cancel
-    return () => cancel()
-  }, [activeType])
   return (
     <nav>
-      <h1>BCZ Intern Portfolio</h1>
-      <div className={style.flex} style={{ marginBottom: 15 }}>
-        <div ref={floatBarRef} className={style.floatBar}></div>
-        {types.map((type, index) => {
-          return (
-            <div
-              key={type}
-              ref={node => (typeRef.current[index] = node)}
-              className={`${style.type} ${activeType === index ? style.activeType : ''}`}
-              onClick={e => {
-                setActiveType(index)
-              }}
-            >
-              <span>{type}</span>
-            </div>
-          )
-        })}
-      </div>
-      <div className={style.flex}>
+      <h1
+        onClick={() => {
+          window.location.href = 'https://flamintune.github.io/bcz-intern-end/'
+        }}
+      >
+        BCZ Intern Portfolio
+      </h1>
+      <div
+        className={style.flex}
+        style={{ justifyContent: 'flex-start', margin: '0 auto', width: '100%' }}
+      >
         {routes
           .filter(item => {
             let str = item.type.toUpperCase()
@@ -150,7 +132,7 @@ function Navigation() {
                 }}
                 className={style.button}
               >
-                了解更多
+                {route.detail}
               </div>
             </div>
           ))}
